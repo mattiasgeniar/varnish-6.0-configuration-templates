@@ -1,4 +1,4 @@
-vcl 4.0;
+vcl 4.1;
 # Based on: https://github.com/mattiasgeniar/varnish-6.0-configuration-templates/blob/master/default.vcl
 
 import std;
