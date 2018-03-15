@@ -33,3 +33,5 @@ Basic troubleshooting:
 [Click here for a Varnish 3 VCL config template](https://github.com/mattiasgeniar/varnish-3.0-configuration-templates)
 
 [Click here for a Varnish 4 VCL config template](https://github.com/mattiasgeniar/varnish-4.0-configuration-templates)
+
+[Click here for a Varnish 5 VCL config template](https://github.com/mattiasgeniar/varnish-5.0-configuration-templates)
