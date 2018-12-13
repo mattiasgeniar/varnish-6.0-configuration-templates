@@ -232,6 +232,11 @@ sub vcl_hash {
   if (req.http.Cookie) {
     hash_data(req.http.Cookie);
   }
+
+  # Cache the HTTP vs HTTPs separately
+  if (req.http.X-Forwarded-Proto) {
+    hash_data(req.http.X-Forwarded-Proto);
+  }
 }
 
 sub vcl_hit {
