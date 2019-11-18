@@ -152,7 +152,7 @@ sub vcl_recv {
       # like msnbot that send no-cache with every request.
       #if (! (req.http.Via || req.http.User-Agent ~ "(?i)bot" || req.http.X-Purge)) {
         #set req.hash_always_miss = true; # Doesn't seems to refresh the object in the cache
-        return(purge); # Couple this with restart in vcl_purge and X-Purge header to avoid loops
+        #return(purge); # Couple this with restart in vcl_purge and X-Purge header to avoid loops
       #}
     #}
   #}
