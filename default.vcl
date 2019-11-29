@@ -270,23 +270,12 @@ sub vcl_hit {
     if (obj.ttl + 10s > 0s) {
       #set req.http.grace = "normal(limited)";
       return (deliver);
-    } else {
-      # No candidate for grace. Fetch a fresh object.
-      return(miss);
-    }
   } else {
     # backend is sick - use full grace
       if (obj.ttl + obj.grace > 0s) {
       #set req.http.grace = "full";
       return (deliver);
-    } else {
-      # no graced object.
-      return (miss);
-    }
   }
-
-  # fetch & deliver once we get the result
-  return (miss); # Dead code, keep as a safeguard
 }
 
 sub vcl_miss {
