@@ -174,6 +174,10 @@ sub vcl_recv {
     return (hash);
   }
 
+  # Unset headers that might cause us to cache duplicate infos
+  #unset req.http.Accept-Language;
+  #unset req.http.User-Agent;
+
   # Send Surrogate-Capability headers to announce ESI support to backend
   set req.http.Surrogate-Capability = "key=ESI/1.0";
 
@@ -181,7 +185,16 @@ sub vcl_recv {
     # Not cacheable by default
     return (pass);
   }
+  # pass nocache and laravel_token cookies
+  if (req.http.cookie) {
+        if (req.http.cookie ~ "(nocache|laravel_token)") {
+            return(pass);
+        }
+  }
 
+  if (req.url ~ "(login|logout)" || req.url ~ "(admin|Admin)" || req.url ~ "(sales-report|user|edit)") {
+        return (pass);
+  }
   return (hash);
 }
 
@@ -270,11 +283,13 @@ sub vcl_hit {
     if (obj.ttl + 10s > 0s) {
       #set req.http.grace = "normal(limited)";
       return (deliver);
+    }
   } else {
     # backend is sick - use full grace
       if (obj.ttl + obj.grace > 0s) {
-      #set req.http.grace = "full";
-      return (deliver);
+         #set req.http.grace = "full";
+         return (deliver);
+     }
   }
 }
 
